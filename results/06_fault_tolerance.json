@@ -1,0 +1,99 @@
+{
+   "heartbeat_config" : {
+      "heartbeat_miss" : 3,
+      "heartbeat_ms" : 100
+   },
+   "mode" : "full",
+   "scenarios" : [
+      {
+         "detail" : "MT_IMMORTAL_MUTATION + read-only trapped; 5/5 sibling CAS+Decimal intact",
+         "failed" : 0,
+         "id" : "sealed_boot_image_isolation",
+         "label" : "Sealed boot image isolation",
+         "max_ms" : 2.867,
+         "metric" : "trap + sibling ops",
+         "min_ms" : 2.434,
+         "p50_ms" : 2.732,
+         "p95_ms" : 2.867,
+         "passed" : 5,
+         "trials" : 5
+      },
+      {
+         "detail" : "schedule 100ms x 3 misses; healthy sibling stayed live",
+         "failed" : 0,
+         "id" : "supervisor_heartbeat_detection",
+         "label" : "Supervisor heartbeat detection",
+         "max_ms" : 303.767,
+         "metric" : "detection latency",
+         "min_ms" : 303.046,
+         "p50_ms" : 303.213,
+         "p95_ms" : 303.767,
+         "passed" : 3,
+         "trials" : 3
+      },
+      {
+         "detail" : "SIGSEGV on primary; backup restored checkpoint (e2e p50 1.33 ms)",
+         "e2e_p50_ms" : 1.333,
+         "e2e_p95_ms" : 10.302,
+         "failed" : 0,
+         "id" : "pool_pairs_failover",
+         "label" : "MT::Pool pairs => 1 failover",
+         "max_ms" : 0.041,
+         "metric" : "backup takeover",
+         "min_ms" : 0.024,
+         "p50_ms" : 0.029,
+         "p95_ms" : 0.041,
+         "passed" : 5,
+         "trials" : 5
+      },
+      {
+         "detail" : "8/10 fibers finished cleanly, 2 trapped via eval, 0 collateral drops",
+         "failed" : 0,
+         "id" : "per_fiber_crash_isolation",
+         "label" : "Per-fiber crash isolation",
+         "max_ms" : 0.834,
+         "metric" : "10-fiber batch",
+         "min_ms" : 0.531,
+         "p50_ms" : 0.583,
+         "p95_ms" : 0.834,
+         "passed" : 10,
+         "trials" : 10
+      },
+      {
+         "detail" : "load p50 0.102 ms; corrupt byte reject p50 0.082 ms",
+         "failed" : 0,
+         "id" : "checkpoint_snapshot_corruption",
+         "label" : "Checkpoint snapshot & checksum reject",
+         "load_p50_ms" : 0.102,
+         "max_ms" : 0.745,
+         "metric" : "atomic save",
+         "min_ms" : 0.258,
+         "p50_ms" : 0.306,
+         "p95_ms" : 0.722,
+         "passed" : 20,
+         "reject_p50_ms" : 0.082,
+         "trials" : 20
+      },
+      {
+         "detail" : "KeyDB/DB closed port; catalog + CAS + Decimal + EventBus 0 errors",
+         "failed" : 0,
+         "id" : "hot_tier_outage_degradation",
+         "label" : "Hot-tier degradation (KeyDB + DB down)",
+         "max_ms" : 0.177,
+         "metric" : "hot-tier cycle",
+         "min_ms" : 0.046,
+         "p50_ms" : 0.048,
+         "p95_ms" : 0.059,
+         "passed" : 20,
+         "trials" : 20
+      }
+   ],
+   "suite" : "06_fault_tolerance",
+   "summary" : {
+      "collateral_drops" : 0,
+      "scenarios_passed" : 6,
+      "scenarios_total" : 6,
+      "trials_passed" : 63,
+      "trials_total" : 63
+   }
+}

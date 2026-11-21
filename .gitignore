@@ -1,0 +1,8 @@
+results/*.tmp
+*.sqlite
+*.db
+*.log
+*.mtck
+.DS_Store
+
+results/*_smoke.json

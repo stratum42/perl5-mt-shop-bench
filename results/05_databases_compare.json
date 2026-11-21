@@ -1,0 +1,180 @@
+{
+   "benchmark" : "05_databases_compare",
+   "keydb" : {
+      "available" : true,
+      "backend" : "keydb",
+      "label" : "KeyDB (127.0.0.1:6380)",
+      "note" : "Live RESP2 TCP instance on 127.0.0.1:6380",
+      "ops" : {
+         "lua_reserve_cart_lease" : {
+            "elapsed" : 0.1577,
+            "iters" : 500,
+            "ops_sec" : 3171.56,
+            "p50_ms" : 0.304,
+            "p95_ms" : 0.376
+         },
+         "pipeline_set_get" : {
+            "cmds_per_batch" : 40,
+            "cmds_sec" : 86472,
+            "elapsed" : 0.2313,
+            "iters" : 500,
+            "ops_sec" : 2161.8,
+            "p50_ms" : 0.46,
+            "p95_ms" : 0.536
+         }
+      },
+      "version" : "6.3.4"
+   },
+   "mode" : "full",
+   "sql_backends" : [
+      {
+         "available" : true,
+         "backend" : "sqlite",
+         "features" : {
+            "compression" : "NONE",
+            "decfloat34" : 0,
+            "driver" : "sqlite",
+            "engine" : "SQLite 3",
+            "final_table" : 0,
+            "merge" : 0,
+            "olap_rollup" : 0,
+            "sp_only" : 0,
+            "temporal" : 0
+         },
+         "label" : "SQLite 3 (CLI subprocess)",
+         "note" : "Spawns sqlite3 CLI per call (zero-XS thread-safe adapter)",
+         "ops" : {
+            "category_olap" : {
+               "elapsed" : 0.5394,
+               "iters" : 80,
+               "ops_sec" : 148.32,
+               "p50_ms" : 6.592,
+               "p95_ms" : 7.964
+            },
+            "decrement_product_stock" : {
+               "elapsed" : 1.024,
+               "iters" : 80,
+               "ops_sec" : 78.13,
+               "p50_ms" : 12.77,
+               "p95_ms" : 13.943,
+               "restored_stock" : 80,
+               "sku" : "AC-STK"
+            },
+            "list_products" : {
+               "elapsed" : 0.5952,
+               "iters" : 80,
+               "ops_sec" : 134.4,
+               "p50_ms" : 7.408,
+               "p95_ms" : 8.073
+            },
+            "tax_nexus_report" : {
+               "elapsed" : 1.0953,
+               "iters" : 80,
+               "ops_sec" : 73.04,
+               "p50_ms" : 13.189,
+               "p95_ms" : 18.578
+            }
+         }
+      },
+      {
+         "available" : true,
+         "backend" : "db2",
+         "features" : {
+            "compression" : "ADAPTIVE",
+            "decfloat34" : 1,
+            "driver" : "db2",
+            "engine" : "IBM Db2 Community Edition",
+            "final_table" : 1,
+            "merge" : 1,
+            "olap_rollup" : 1,
+            "sp_only" : 1,
+            "temporal" : 1
+         },
+         "label" : "IBM Db2 12.1 (SP-ONLY HTTP gateway)",
+         "note" : "Live Docker gateway at http://127.0.0.1:50050 (DB2_SP_ONLY=1, HTTP keep-alive)",
+         "ops" : {
+            "category_olap" : {
+               "elapsed" : 4.4241,
+               "iters" : 100,
+               "ops_sec" : 22.6,
+               "p50_ms" : 43.923,
+               "p95_ms" : 47.882
+            },
+            "decrement_product_stock" : {
+               "elapsed" : 4.4649,
+               "iters" : 100,
+               "ops_sec" : 22.4,
+               "p50_ms" : 44.363,
+               "p95_ms" : 46.668,
+               "restored_stock" : 80,
+               "sku" : "AC-STK"
+            },
+            "list_products" : {
+               "elapsed" : 0.2888,
+               "iters" : 100,
+               "ops_sec" : 346.31,
+               "p50_ms" : 2.83,
+               "p95_ms" : 3.241
+            },
+            "tax_nexus_report" : {
+               "elapsed" : 4.6186,
+               "iters" : 100,
+               "ops_sec" : 21.65,
+               "p50_ms" : 45.242,
+               "p95_ms" : 50.209
+            }
+         }
+      },
+      {
+         "available" : true,
+         "backend" : "informix",
+         "features" : {
+            "compression" : "ROW",
+            "decfloat34" : 0,
+            "decimal32" : 1,
+            "driver" : "informix",
+            "engine" : "IBM Informix Innovator-C",
+            "final_table" : 0,
+            "merge" : 1,
+            "olap_rollup" : 1,
+            "sp_only" : 1,
+            "spl_procs" : 1,
+            "temporal" : 1
+         },
+         "label" : "IBM Informix 15.0 (SP-ONLY HTTP gateway)",
+         "note" : "Live Docker gateway at http://127.0.0.1:50051 (INFORMIX_SP_ONLY=1, HTTP keep-alive)",
+         "ops" : {
+            "category_olap" : {
+               "elapsed" : 4.5726,
+               "iters" : 100,
+               "ops_sec" : 21.87,
+               "p50_ms" : 45.285,
+               "p95_ms" : 49.825
+            },
+            "decrement_product_stock" : {
+               "elapsed" : 4.5167,
+               "iters" : 100,
+               "ops_sec" : 22.14,
+               "p50_ms" : 44.956,
+               "p95_ms" : 48.399,
+               "restored_stock" : 80,
+               "sku" : "AC-STK"
+            },
+            "list_products" : {
+               "elapsed" : 0.3133,
+               "iters" : 100,
+               "ops_sec" : 319.14,
+               "p50_ms" : 3.091,
+               "p95_ms" : 3.661
+            },
+            "tax_nexus_report" : {
+               "elapsed" : 4.4317,
+               "iters" : 100,
+               "ops_sec" : 22.56,
+               "p50_ms" : 44.051,
+               "p95_ms" : 45.929
+            }
+         }
+      }
+   ]
+}

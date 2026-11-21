@@ -1,0 +1,83 @@
+{
+   "baseline_rss_kb" : 110416,
+   "baseline_rss_mb" : 107.83,
+   "benchmark" : "01_ssh_concurrency_rss",
+   "config" : {
+      "cipher" : "chacha20-poly1305@openssh.com",
+      "compression" : "zlib@openssh.com",
+      "concurrency" : 16,
+      "db_driver" : "sqlite",
+      "kex" : "curve25519-sha256",
+      "max_sessions" : 1000,
+      "mt_fiber_stack" : 32768,
+      "session_workers" : 4
+   },
+   "errors" : 0,
+   "milestones" : [
+      {
+         "batch_elapsed_sec" : 0.182,
+         "delta_mb" : 41.45,
+         "handshakes_per_sec" : 550.1,
+         "kb_per_fiber" : 424.48,
+         "metrics_active" : 100,
+         "metrics_parity" : true,
+         "rss_kb" : 152864,
+         "rss_mb" : 149.28,
+         "sessions" : 100
+      },
+      {
+         "batch_elapsed_sec" : 0.276,
+         "delta_mb" : 101.89,
+         "handshakes_per_sec" : 543.6,
+         "kb_per_fiber" : 417.34,
+         "metrics_active" : 250,
+         "metrics_parity" : true,
+         "rss_kb" : 214752,
+         "rss_mb" : 209.72,
+         "sessions" : 250
+      },
+      {
+         "batch_elapsed_sec" : 0.529,
+         "delta_mb" : 202.42,
+         "handshakes_per_sec" : 472.3,
+         "kb_per_fiber" : 414.56,
+         "metrics_active" : 500,
+         "metrics_parity" : true,
+         "rss_kb" : 317696,
+         "rss_mb" : 310.25,
+         "sessions" : 500
+      },
+      {
+         "batch_elapsed_sec" : 0.655,
+         "delta_mb" : 302.81,
+         "handshakes_per_sec" : 381.6,
+         "kb_per_fiber" : 413.44,
+         "metrics_active" : 750,
+         "metrics_parity" : true,
+         "rss_kb" : 420496,
+         "rss_mb" : 410.64,
+         "sessions" : 750
+      },
+      {
+         "batch_elapsed_sec" : 0.796,
+         "delta_mb" : 403.28,
+         "handshakes_per_sec" : 314.2,
+         "kb_per_fiber" : 412.96,
+         "metrics_active" : 1000,
+         "metrics_parity" : true,
+         "rss_kb" : 523376,
+         "rss_mb" : 511.11,
+         "sessions" : 1000
+      }
+   ],
+   "mode" : "full",
+   "overall_elapsed_sec" : 2.438,
+   "overall_hs_per_sec" : 410.2,
+   "post_drain" : {
+      "active_sessions" : 0,
+      "connections_total" : 1000,
+      "drain_sec" : 0.107,
+      "rss_kb" : 523472,
+      "rss_mb" : 511.2
+   }
+}

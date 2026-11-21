@@ -1,0 +1,70 @@
+{
+   "benchmark" : "04_http_ops_wrk",
+   "connections" : 64,
+   "duration_sec" : 5,
+   "endpoints" : [
+      {
+         "errors" : 0,
+         "method" : "GET",
+         "name" : "GET /healthz",
+         "p50_ms" : 12.438,
+         "p95_ms" : 13.294,
+         "p99_ms" : 14.631,
+         "path" : "/healthz",
+         "req_per_sec" : 5104.28,
+         "requests" : 26051,
+         "status_ok" : true,
+         "transfer_mb_s" : 1.121
+      },
+      {
+         "errors" : 0,
+         "method" : "GET",
+         "name" : "GET /metrics",
+         "p50_ms" : 15.154,
+         "p95_ms" : 16.161,
+         "p99_ms" : 21.533,
+         "path" : "/metrics",
+         "req_per_sec" : 4164.72,
+         "requests" : 21256,
+         "status_ok" : true,
+         "transfer_mb_s" : 7.539
+      },
+      {
+         "errors" : 0,
+         "method" : "GET",
+         "name" : "GET /api/catalog",
+         "p50_ms" : 18.644,
+         "p95_ms" : 19.799,
+         "p99_ms" : 24.473,
+         "path" : "/api/catalog",
+         "req_per_sec" : 3383.86,
+         "requests" : 16954,
+         "status_ok" : true,
+         "transfer_mb_s" : 13.541
+      },
+      {
+         "errors" : 0,
+         "method" : "POST",
+         "name" : "POST /webhooks/stripe",
+         "p50_ms" : 13.808,
+         "p95_ms" : 16.528,
+         "p99_ms" : 25.625,
+         "path" : "/webhooks/stripe",
+         "req_per_sec" : 4510.97,
+         "requests" : 22626,
+         "status_ok" : true,
+         "transfer_mb_s" : 0.766
+      }
+   ],
+   "generator" : "wrk",
+   "mode" : "full",
+   "server" : {
+      "accel" : true,
+      "engine" : "mojolicious-mt",
+      "reactor" : "Mojo::Reactor::MT",
+      "startup_ms" : 1122.09
+   },
+   "threads" : 4,
+   "total_errors" : 0,
+   "wrk_version" : "wrk 4.2.0 [kqueue] Copyright (C) 2012 Will Glozer"
+}
