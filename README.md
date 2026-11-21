@@ -2,7 +2,7 @@
 
 Reproducible benchmark harnesses and reference measurements for [`perl5-mt-shop`](../perl5-mt-shop) running on [`perl5-mt`](../perl5-mt) and [`mojolicious-mt`](../mojolicious-mt).
 
-This repository measures the core subsystems of `perl5-mt-shop` end to end: concurrent SSHv2 fiber scaling and RSS footprint, ANSI TUI egress and zlib compression tradeoffs, Tier-1 XS crypto and lock-free `MT::Cell` / `MT::Decimal` scaling, HTTP ops and webhook throughput under `mojolicious-mt`, and database round-trip latency across SQLite, IBM Db2, IBM Informix, and KeyDB.
+This repository measures the core subsystems of `perl5-mt-shop` end to end across 7 benchmark harnesses: concurrent SSHv2 fiber scaling and RSS footprint, ANSI TUI egress and zlib compression tradeoffs, Tier-1 XS crypto and lock-free `MT::Cell` / `MT::Decimal` scaling, HTTP ops and webhook throughput under `mojolicious-mt`, database round-trip latency across SQLite, IBM Db2, IBM Informix, and KeyDB, fault tolerance and recovery, and concurrency ceiling under interactive load.
 
 ## Acknowledgments
 
@@ -15,6 +15,8 @@ This benchmark suite builds on the work of many communities and maintainers:
 - **Will Glozer (`wrk`)**, for the HTTP load generator used in the ops benchmark.
 
 ## What Is Included
+
+Seven benchmark harnesses (`01` through `07_concurrency_ceiling.pl`) plus the `bench/run_all.pl` orchestrator:
 
 1. **`bench/01_ssh_concurrency_rss.pl`**: Boots `bin/shop-server` on ephemeral ports with `MT_FIBER_STACK=32768` and opens concurrent real SSHv2 sessions (`curve25519-sha256` + `chacha20-poly1305@openssh.com` + `zlib@openssh.com` + PTY + initial ANSI TUI render) up to 1,000 live fibers (100 in `--smoke` mode). Records baseline RSS, milestone RSS (100, 250, 500, 750, 1,000), KB per fiber, handshakes/sec, `/metrics` active-session parity, and post-drain RSS.
 2. **`bench/02_egress_matrix.pl`**: Drives a 100-frame 80x24 interactive TUI workload (30 frames in `--smoke` mode) covering initial render, catalog navigation, live stock updates, cart updates, and terminal resize. Compares full-frame ANSI, line-diff ANSI, `Shop::TUI::Screen` cell-diff (`MT::Array::packed('IV')`) raw, and cell-diff with `zlib@openssh.com` across compression levels 1, 3, 5, 6, and 9, measuring both exact wire bytes and CPU microseconds per frame.
