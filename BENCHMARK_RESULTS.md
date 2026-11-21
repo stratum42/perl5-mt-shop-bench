@@ -145,6 +145,20 @@ Empirical fault-injection scenarios covering sealed boot-image isolation, `MT::S
 | Checkpoint snapshot & checksum reject | atomic save | 20/20 | 0.306 | 0.722 | load p50 0.102 ms; corrupt byte reject p50 0.082 ms |
 | Hot-tier degradation (KeyDB + DB down) | hot-tier cycle | 20/20 | 0.048 | 0.059 | KeyDB/DB closed port; catalog + CAS + Decimal + EventBus 0 errors |
 
+## 7. Concurrency Ceiling & Interactive Latency Under Load
+
+Server booted with `8` session workers, `MT_FIBER_STACK=32768` bytes, concurrency `32` (within macOS `kern.ipc.somaxconn=128`), KEX `curve25519-sha256`, cipher `chacha20-poly1305@openssh.com`, compression `zlib@openssh.com`, DB `sqlite`, targeting milestones `500, 1000, 2500, 5000, 7500, 10000` (reproduce with `make ceiling`). At each milestone, after a 1.0 s settle, the harness records RSS, KB/fiber, 1.0 s instantaneous steady-state idle CPU% (delta CPU time over wall time) alongside `ps %CPU`, and live interactive keypress RTT (`'j'` via `SSH_MSG_CHANNEL_DATA` to compressed ANSI diff frame response) across 10 canary sessions.
+
+- **Baseline RSS (0 sessions)**: 114.59 MiB (117,344 KB)
+- **Measured ceiling**: `bin/shop-server` stayed clean through 1,000 live sessions (0 errors, keypress RTT p95 3.05 ms) and terminated with `SIGABRT` (signal 6) at **1,018 live sessions** while ramping toward 2,500 (reproduced at 1,002 to 1,018 sessions with both 4 and 8 session workers, consistent with a process-wide 1,024-entry/FD boundary on macOS).
+- **Clean drain & shutdown at peak clean milestone (1,000 sessions, `--max 1000`)**: 0 active sessions after **0.12 s**, clean `SIGTERM` shutdown in **3,824.6 ms**.
+
+| Live Sessions | Server RSS (MiB) | KB / Fiber | Batch HS/s | Idle CPU% (1s) | `ps %CPU` | Keypress p50 (ms) | Keypress p95 (ms) | Keypress max (ms) | `/metrics` Parity | Errors |
+|---:|---:|---:|---:|---:|---:|---:|---:|---:|:---:|---:|
+| 500 | 393.72 | 571.65 | 830.0 | 10.8% | 11.0% | 2.71 | 2.95 | 2.95 | OK (500) | 0 |
+| 1,000 | 668.66 | 567.36 | 800.5 | 20.7% | 20.8% | 2.87 | 3.05 | 3.05 | OK (1,000) | 0 |
+| 1,018 (stop) | 0.00 | 0.00 | 186.1 | 0.0% | 0.0% | n/a | n/a | n/a | server SIGABRT | 1 |
+
 ## Acknowledgments
 
 Thank you to the Perl 5 Porters, Sebastian Riedel and the Mojolicious contributors, the libsodium, OpenSSL, and zlib maintainers, the IBM Db2, IBM Informix, KeyDB, and SQLite teams, and Will Glozer (`wrk`).

@@ -15,7 +15,7 @@ export PERL5_MT_ROOT
 export SHOP_ROOT
 export MOJOLICIOUS_MT_ROOT
 
-.PHONY: all smoke ssh egress micro http db fault
+.PHONY: all smoke ssh egress micro http db fault ceiling
 
 all:
 	@mkdir -p $(CURDIR)/results
@@ -48,3 +48,7 @@ db:
 fault:
 	@mkdir -p $(CURDIR)/results
 	$(PERL) $(PERL_FLAGS) $(CURDIR)/bench/06_fault_tolerance.pl --json $(CURDIR)/results/06_fault_tolerance.json $(BENCH_ARGS)
+
+ceiling:
+	@mkdir -p $(CURDIR)/results
+	$(PERL) $(PERL_FLAGS) $(CURDIR)/bench/07_concurrency_ceiling.pl --json $(CURDIR)/results/07_concurrency_ceiling.json $(BENCH_ARGS)

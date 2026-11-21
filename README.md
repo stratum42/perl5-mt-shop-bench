@@ -22,7 +22,8 @@ This benchmark suite builds on the work of many communities and maintainers:
 4. **`bench/04_http_ops_wrk.pl`**: Boots `bin/shop-server` with `mojolicious-mt` (`Mojo::Reactor::MT` + `Mojo::MT::Accel`) on ephemeral SSH and ops ports and benchmarks `GET /healthz`, `GET /metrics`, `GET /api/catalog`, and signed `POST /webhooks/stripe` using `wrk` (with a built-in multi-worker Perl HTTP/1.1 keep-alive fallback if `wrk` is not installed).
 5. **`bench/05_databases_compare.pl`**: Benchmarks identical operations (`list_products`, `decrement_product_stock` with exact stock restoration afterward, `category_olap`, `tax_nexus_report`) across SQLite, live IBM Db2 12.1 SP-ONLY (`http://127.0.0.1:50050`), and live IBM Informix 15.0 SP-ONLY (`http://127.0.0.1:50051`), plus KeyDB pipelined `SET`/`GET` and Lua `reserve_cart_lease`. Unavailable Docker or KeyDB backends are skipped cleanly with a note.
 6. **`bench/06_fault_tolerance.pl`**: Runs six empirical fault-injection and chaos scenarios: sealed boot-image mutation trapping alongside healthy sibling CAS/Decimal work, `MT::Supervisor` + `MT::Fault` missed-heartbeat detection, `MT::Pool` (`pairs => 1`) primary/backup checkpoint failover on primary `SIGSEGV`, per-fiber crash isolation across 10 fibers, `MT::Checkpoint` atomic snapshot save/reload and corrupted-byte checksum rejection, and hot-tier graceful degradation during KeyDB and DB outages.
-7. **`bench/run_all.pl`**: Runs `01` through `06` in sequence, writes per-suite JSON artifacts under `results/`, collects host and runtime metadata, and generates [`BENCHMARK_RESULTS.md`](BENCHMARK_RESULTS.md).
+7. **`bench/07_concurrency_ceiling.pl`**: Ramps live real SSHv2 sessions (`curve25519-sha256`, `chacha20-poly1305@openssh.com`, `zlib@openssh.com`, PTY, initial TUI render) with 8 session workers, `MT_FIBER_STACK=32768`, and 32 concurrent handshakes across milestones (`500, 1000, 2500, 5000, 7500, 10000`; `250, 500` in `--smoke` mode). At each milestone after a 1.0 s settle, records server RSS, KB/fiber, 1.0 s steady-state idle CPU% alongside `ps %CPU`, live interactive keypress RTT (`'j'` across 10 canary sessions: p50, p95, max), `/metrics` parity, and error count, stopping cleanly on errors or p95 keypress RTT above 500 ms, then measures full session drain and clean `SIGTERM` shutdown time.
+8. **`bench/run_all.pl`**: Runs `01` through `06` in sequence, writes per-suite JSON artifacts under `results/`, collects host and runtime metadata, and generates [`BENCHMARK_RESULTS.md`](BENCHMARK_RESULTS.md).
 
 ## Reference Report
 
@@ -53,6 +54,7 @@ Individual benchmarks can also be run directly, for example:
 perl bench/04_http_ops_wrk.pl --smoke --json results/04_http_ops_wrk.json
 KEYDB_PORT=6380 perl bench/05_databases_compare.pl --smoke --json results/05_databases_compare.json
 make fault
+make ceiling
 ```
 
 ## Environment Variables

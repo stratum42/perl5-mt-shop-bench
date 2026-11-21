@@ -1,0 +1,101 @@
+{
+   "baseline_rss_kb" : 117344,
+   "baseline_rss_mb" : 114.59,
+   "benchmark" : "07_concurrency_ceiling",
+   "ceiling_hit" : true,
+   "ceiling_reason" : "errors (1): shop-server terminated by signal 6",
+   "config" : {
+      "canaries" : 10,
+      "cipher" : "chacha20-poly1305@openssh.com",
+      "compression" : "zlib@openssh.com",
+      "concurrency" : 32,
+      "db_driver" : "sqlite",
+      "kex" : "curve25519-sha256",
+      "max_sessions" : 10000,
+      "mt_fiber_stack" : 32768,
+      "rtt_limit_ms" : 500,
+      "session_workers" : 8
+   },
+   "errors" : 1,
+   "milestones" : [
+      {
+         "batch_elapsed_sec" : 0.602,
+         "delta_mb" : 279.12,
+         "errors" : 0,
+         "handshakes_per_sec" : 830,
+         "idle_cpu_pct_1s" : 10.8,
+         "kb_per_fiber" : 571.65,
+         "keypress_rtt_ms" : {
+            "canaries" : 10,
+            "key" : "j",
+            "max" : 2.95,
+            "p50" : 2.71,
+            "p95" : 2.95
+         },
+         "metrics_active" : 500,
+         "metrics_parity" : true,
+         "ps_pcpu_decayed" : 11,
+         "rss_kb" : 403168,
+         "rss_mb" : 393.72,
+         "sessions" : 500,
+         "target_sessions" : 500
+      },
+      {
+         "batch_elapsed_sec" : 0.625,
+         "delta_mb" : 554.06,
+         "errors" : 0,
+         "handshakes_per_sec" : 800.5,
+         "idle_cpu_pct_1s" : 20.7,
+         "kb_per_fiber" : 567.36,
+         "keypress_rtt_ms" : {
+            "canaries" : 10,
+            "key" : "j",
+            "max" : 3.05,
+            "p50" : 2.87,
+            "p95" : 3.05
+         },
+         "metrics_active" : 1000,
+         "metrics_parity" : true,
+         "ps_pcpu_decayed" : 20.8,
+         "rss_kb" : 684704,
+         "rss_mb" : 668.66,
+         "sessions" : 1000,
+         "target_sessions" : 1000
+      },
+      {
+         "batch_elapsed_sec" : 0.097,
+         "delta_mb" : 0,
+         "errors" : 1,
+         "handshakes_per_sec" : 186.1,
+         "idle_cpu_pct_1s" : 0,
+         "kb_per_fiber" : 0,
+         "keypress_rtt_ms" : {
+            "canaries" : 0,
+            "key" : "j",
+            "max" : 0,
+            "p50" : 0,
+            "p95" : 0
+         },
+         "metrics_active" : -1,
+         "metrics_parity" : false,
+         "ps_pcpu_decayed" : 0,
+         "rss_kb" : 0,
+         "rss_mb" : 0,
+         "sessions" : 1018,
+         "target_sessions" : 2500
+      }
+   ],
+   "mode" : "full",
+   "overall_elapsed_sec" : 1.324,
+   "overall_hs_per_sec" : 769,
+   "peak_sessions" : 1018,
+   "post_drain" : {
+      "active_sessions" : -1,
+      "clean_shutdown" : false,
+      "connections_total" : 0,
+      "drain_sec" : 0,
+      "rss_kb" : 0,
+      "rss_mb" : 0,
+      "shutdown_ms" : 0
+   }
+}
